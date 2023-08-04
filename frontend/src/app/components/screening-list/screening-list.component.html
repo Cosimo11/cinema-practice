@@ -1,0 +1,27 @@
+<div class="card bg-body-tertiary">
+  <div class="card-body text-center d-flex flex-column">
+    <h5 class="text-center mb-3">Products</h5>
+    <hr>
+    <table class="table mb-5">
+      <thead>
+      <tr  class="table-success">
+        <th scope="col">Title</th>
+        <th scope="col">Time</th>
+        <th scope="col">Total seats</th>
+        <th scope="col">Free seats</th>
+        <th scope="col">Image</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let screening of screeninglist" >
+        <td>{{screening.title}}</td>
+        <td>{{screening.screeningDate}}</td>
+        <td>{{screening.totalSeat}}</td>
+        <td>{{screening.freeSeats}}</td>
+        <td><img src="{{screening.pictureUrl}}" height="70" alt="pic"></td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>

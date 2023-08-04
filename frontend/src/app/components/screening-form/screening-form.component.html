@@ -1,0 +1,43 @@
+    <form [formGroup]="screeningForm">
+      <div class="mb-3">
+        <label for="title" class="form-label"
+        >Title</label>
+        <input type="text" class="form-control" id="title" placeholder="Title" formControlName="title"
+               [ngClass]="{'border-danger': (screeningForm.get('title')?.invalid && screeningForm.get('title')?.touched)
+    || (screeningForm.get('title')?.errors?.['serverError'])}">
+
+        <small *ngIf="screeningForm.get('title')?.invalid && screeningForm.get('title')?.touched
+    && !screeningForm.get('title')?.errors?.['serverError']">Please enter a valid screening name.</small>
+        <small *ngIf="screeningForm.get('title')?.errors?.['serverError']">
+          {{screeningForm.get('title')?.errors?.['serverError']}}
+        </small>
+      </div>
+      <div class="form-group">
+        <label for="screening-date">Screening Date:</label>
+        <input type="datetime-local"
+               class="form-control" id="screening-date"
+               placeholder="Screening date"
+               formControlName="screeningDate">
+      </div>
+      <div class="form-group">
+        <label for="totalSeat">Total seats:</label>
+        <input type="number"
+               class="form-control"
+               id="totalSeat"
+               placeholder="seats"
+               formControlName="totalSeat">
+      </div>
+      <div class="form-group">
+        <label for="picture-url">Picture Url:</label>
+        <input
+          type="text"
+          class="form-control"
+          id="picture-url"
+          placeholder="Picture URL"
+          formControlName="pictureUrl">
+      </div>
+      <br>
+      <button  type="submit" class="btn btn-primary" (click)="onSubmit()">Submit</button>
+    </form>
+
+
