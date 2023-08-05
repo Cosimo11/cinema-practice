@@ -1,8 +1,8 @@
 export interface ScreeningListItemModel {
   pictureUrl: string;
-title: string
-screeningDate: Date;
-totalSeat: number;
-freeSeats: number;
+  title: string
+  screeningDate: string;
+  totalSeat: number;
+  freeSeats: number;
 
 }

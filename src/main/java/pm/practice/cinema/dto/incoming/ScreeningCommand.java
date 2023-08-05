@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Data
 
@@ -16,7 +17,6 @@ public class ScreeningCommand {
     private LocalDateTime screeningDate;
     private Integer totalSeat;
     private String pictureUrl;
-
 
 
 }

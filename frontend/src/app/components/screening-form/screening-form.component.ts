@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Component} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ScreeningService} from "../../services/screening.service";
 import {Router} from "@angular/router";
+import {validationHandler} from "../../utils/validation-handler";
 
 @Component({
   selector: 'app-screening-form',
@@ -15,13 +16,17 @@ export class ScreeningFormComponent {
   constructor(private screeningService: ScreeningService,
               private formBuilder: FormBuilder,
               private router: Router
-              ) {
+  ) {
 
     this.screeningForm = formBuilder.group({
-        title: ['', Validators.required],
-        screeningDate: ['', Validators.required],
-        totalSeat: [0, Validators.required],
-        pictureUrl: ['']
+        title: new FormControl('', [Validators.required],),
+        screeningDate: new FormControl([0], [Validators.required]),
+        totalSeat: new FormControl('', [
+          Validators.required,
+          Validators.min(85),
+          Validators.max(155)
+        ]),
+        pictureUrl: new FormControl('', [Validators.required])
       }
     )
 
@@ -30,13 +35,17 @@ export class ScreeningFormComponent {
   onSubmit() {
     const data = this.screeningForm.value;
     this.screeningService.addScreening(data).subscribe({
-      next: value => {},
-      error: err => console.log(err),
-      complete: () => {console.log('Screening successfully added');
-      this.router.navigate(['screening-list'])}
+      next: value => {
+      },
+      error: err => validationHandler(err, this.screeningForm),
+      complete: () => {
+        console.log('Screening successfully added');
+        this.router.navigate(['screening-list'])
+      }
     })
 
 
-
-    }
   }
+
+
+}

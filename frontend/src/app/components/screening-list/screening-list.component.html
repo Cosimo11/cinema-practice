@@ -1,10 +1,10 @@
 <div class="card bg-body-tertiary">
-  <div class="card-body text-center d-flex flex-column">
-    <h5 class="text-center mb-3">Products</h5>
+  <div class="card-body text-center  d-flex flex-column">
+    <h5 class="text-center mb-3">Screenings</h5>
     <hr>
     <table class="table mb-5">
       <thead>
-      <tr  class="table-success">
+      <tr class="table-success">
         <th scope="col">Title</th>
         <th scope="col">Time</th>
         <th scope="col">Total seats</th>
@@ -13,7 +13,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let screening of screeninglist" >
+      <tr *ngFor="let screening of screeninglist">
         <td>{{screening.title}}</td>
         <td>{{screening.screeningDate}}</td>
         <td>{{screening.totalSeat}}</td>

@@ -1,0 +1,66 @@
+<div class="card bg-body-tertiary">
+  <div class="card-body text-center d-flex flex-column">
+
+    <form [formGroup]="registrationForm">
+      <div class="mb-3">
+        <label for="name" class="form-label"
+        >Enter your name: </label>
+        <input type="text"
+               class="form-control"
+               id="name"
+               placeholder="eg. John Smith"
+               formControlName="name"
+               [ngClass]="{'border-danger': (registrationForm.get('name')?.invalid &&
+                       registrationForm.get('name')?.touched) ||
+                       (registrationForm.get('name')?.errors?.['serverError'])}">
+
+        <small *ngIf="registrationForm.get('name')?.invalid && registrationForm.get('name')?.touched
+            && !registrationForm.get('name')?.errors?.['serverError']">Please enter your name.</small>
+        <small *ngIf="registrationForm.get('name')?.errors?.['serverError']">
+          {{registrationForm.get('name')?.errors?.['serverError']}}
+        </small>
+
+      </div>
+
+      <div class="form-group">
+        <label for="requestedSeats">Number of seats:</label>
+        <input type="number"
+               class="form-control"
+               id="requestedSeats"
+               placeholder="requested seats:"
+               formControlName="numberOfSeats"
+               [ngClass]="{'border-danger': (registrationForm.get('numberOfSeats')?.invalid &&
+                       registrationForm.get('numberOfSeats')?.touched) ||
+                       (registrationForm.get('numberOfSeats')?.errors?.['serverError'])}">
+        <div>
+          <small *ngIf="registrationForm.get('numberOfSeats')?.invalid && registrationForm.get('numberOfSeats')?.touched
+        && !registrationForm.get('numberOfSeats')?.errors?.['serverError']">Please enter a seat number between
+            85-155</small>
+          <small *ngIf="registrationForm.get('numberOfSeats')?.errors?.['serverError']">
+            {{registrationForm.get('numberOfSeats')?.errors?.['serverError']}}
+          </small></div>
+      </div>
+
+      <div class="form-group">
+        <label for="screenings">Select a screening</label>
+        <select
+          class="form-select"
+          aria-label="screenings"
+          id="screenings"
+          formControlName="screeningId">
+          <option value='' disabled>Select from available screenings</option>
+          <option *ngFor="let option of screeningOptions" [ngValue]="option.id">{{option.title}}</option>
+        </select>
+
+        <small *ngIf="registrationForm.get('screeningId')?.invalid &&
+          registrationForm.get('screeningId')?.touched &&
+          !registrationForm.get('screeningId')?.errors?.['serverError']">Please select a screening</small>
+        <small *ngIf="registrationForm.get('screeningId')?.errors?.['serverError']">
+          {{registrationForm.get('screeningId')?.errors?.['serverError']}}
+        </small>
+      </div>
+      <br>
+      <button [disabled]="registrationForm.invalid" type="submit" class="btn btn-primary" (click)="saveReservation()">Save</button>
+    </form>
+  </div>
+</div>
