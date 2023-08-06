@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {ScreeningCommandModel} from "../models/screening-command-model";
 import {ScreeningListItemModel} from "../models/screening-list-item-model";
 import {ScreeningTitlesItemModel} from "../models/screening-titles-item-model";
+import {MovieSummaryItemModel} from "../models/movie-summary-item-model";
 
 const BASE_URL = "http://localhost:8080/api/screenings"
 
@@ -29,5 +30,10 @@ export class ScreeningService {
 
   getAllScreeningTitles(): Observable<ScreeningTitlesItemModel[]> {
     return this.http.get<ScreeningTitlesItemModel[]>(BASE_URL + '/screeningOption');
+  }
+
+  getSummaries():Observable<MovieSummaryItemModel[]> {
+    return this.http.get<MovieSummaryItemModel[]>(BASE_URL + '/summaries')
+
   }
 }

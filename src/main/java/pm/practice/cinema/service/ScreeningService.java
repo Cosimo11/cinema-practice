@@ -5,13 +5,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pm.practice.cinema.controllers.ScreeningController;
+import pm.practice.cinema.domain.Reservation;
 import pm.practice.cinema.domain.Screening;
 import pm.practice.cinema.dto.incoming.ScreeningCommand;
+import pm.practice.cinema.dto.outgoing.MovieSummaryItem;
 import pm.practice.cinema.dto.outgoing.ScreeningListItem;
 import pm.practice.cinema.dto.outgoing.ScreeningOptionItem;
+import pm.practice.cinema.repository.ReservationRepository;
 import pm.practice.cinema.repository.ScreeningRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,9 +43,8 @@ public class ScreeningService {
         return screeningListItemList;
     }
 
-    public Screening findScreeningById (Long id ){
-        return screeningRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-    }
+
+
     public List<ScreeningOptionItem> getAllScreeningTitles() {
         List<Screening> screenings = screeningRepository.findAll();
         List<ScreeningOptionItem> screeningOptionItems = screenings.stream().map(ScreeningOptionItem::new).collect(Collectors.toList());
@@ -51,10 +53,32 @@ public class ScreeningService {
 
     public Screening updateScreeningWithReservation(Long screeningId, Integer requiredSeats) {
         Screening screening = screeningRepository.findById(screeningId).orElseThrow(EntityNotFoundException::new);
-        if(screening != null && screening.getFreeSeats()>requiredSeats) {
-            screening.setFreeSeats(screening.getFreeSeats()-requiredSeats);
+        if (screening != null && screening.getFreeSeats() > requiredSeats) {
+            screening.setFreeSeats(screening.getFreeSeats() - requiredSeats);
             return screening;
         } else logger.info("no such screening or not enough free seets for the reservation");
-       return null;
+        return null;
+    }
+
+    public List<MovieSummaryItem> getAllSummaries() {
+        List<MovieSummaryItem> summaries = new ArrayList<>();
+        List<String> titles = screeningRepository.findAllDistinctTitles();
+        for (String title : titles) {
+            List<Screening> screenings = screeningRepository.findByTitle(title);
+
+            int numberOfScreenings = screenings.size();
+            int ticketsold = 0;
+
+            for (Screening screening : screenings) {
+                for (Reservation reservation : screening.getReservations()) {
+                    ticketsold += reservation.getNumberOfSeats();
+                }
+            }
+            summaries.add(new MovieSummaryItem(title, numberOfScreenings, ticketsold));
+
+
+        }
+        return summaries;
     }
 }
+

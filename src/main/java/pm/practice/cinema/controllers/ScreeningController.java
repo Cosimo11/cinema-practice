@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import pm.practice.cinema.dto.incoming.ScreeningCommand;
+import pm.practice.cinema.dto.outgoing.MovieSummaryItem;
 import pm.practice.cinema.dto.outgoing.ScreeningListItem;
 import pm.practice.cinema.dto.outgoing.ScreeningOptionItem;
 import pm.practice.cinema.service.ScreeningService;
@@ -19,7 +20,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/screenings")
 public class ScreeningController {
-    private static final Logger logger = LoggerFactory.getLogger(ScreeningController.class);
     private ScreeningService screeningService;
     private ScreeningCommandValidator screeningCommandValidator;
 
@@ -52,5 +52,10 @@ public class ScreeningController {
         return new ResponseEntity<>(screeningService.getAllScreeningTitles(), HttpStatus.OK);
 
     }
+    @GetMapping(("/summaries"))
+    public ResponseEntity<List<MovieSummaryItem>> getAllSummaries(){
+        return new ResponseEntity<>(screeningService.getAllSummaries(), HttpStatus.OK);
+    }
+
 
 }

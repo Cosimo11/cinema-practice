@@ -1,0 +1,24 @@
+<div class="card bg-body-tertiary">
+  <div class="card-body text-center  d-flex flex-column">
+    <h5 class="text-center mb-3">Movie Summary</h5>
+    <hr>
+    <table class="table mb-5">
+      <thead>
+      <tr class="table-success">
+        <th scope="col">Movie Title</th>
+        <th scope="col">Number of screanings</th>
+        <th scope="col">Tickets Sold</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let summary of summarylist">
+        <td>{{summary.movieTitle}}</td>
+        <td>{{summary.numberOfScreenings}}</td>
+        <td>{{summary.ticketsSold}}</td>
+      </tr>
+      </tbody>
+    </table>
+
+  </div>
+</div>
+

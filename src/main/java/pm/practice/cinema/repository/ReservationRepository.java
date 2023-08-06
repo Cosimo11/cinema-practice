@@ -7,4 +7,5 @@ import pm.practice.cinema.domain.Reservation;
 @Repository
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
+
 }
